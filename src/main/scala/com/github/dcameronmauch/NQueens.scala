@@ -21,8 +21,9 @@ object NQueens {
         if (state.queens.size == n) recurse(todo.tail, acc + state.queens)
         else if (state.avail.size < n - state.queens.size) recurse(todo.tail, acc)
         else {
-          val next: List[State] = state.avail.toList
-            .map(a => State(state.queens + a, filter(a, state.avail - a)))
+          val next: List[State] = state.avail.toList.map(a =>
+            State(state.queens + a, filter(a, state.avail - a))
+          )
           recurse(next ++ todo.tail, acc)
         }
       }
