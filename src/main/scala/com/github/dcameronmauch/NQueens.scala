@@ -15,16 +15,17 @@ object NQueens {
 
     @tailrec
     def recurse(todo: List[State], acc: Set[Set[Int]]): Set[Set[Int]] = todo match {
-      case Nil => acc
+      case Nil =>
+        acc
+      case state :: tail if (state.queens.size == n) =>
+        recurse(tail, acc + state.queens)
+      case state :: tail if (state.avail.size < n - state.queens.size) =>
+        recurse(tail, acc)
       case state :: tail =>
-        if (state.queens.size == n) recurse(tail, acc + state.queens)
-        else if (state.avail.size < n - state.queens.size) recurse(tail, acc)
-        else {
-          val next: List[State] = state.avail.toList.map(a =>
-            State(state.queens + a, filter(a, state.avail - a))
-          )
-          recurse(next ++ tail, acc)
-        }
+        val next: List[State] = state.avail.toList.map(a =>
+          State(state.queens + a, filter(a, state.avail - a))
+        )
+        recurse(next ++ tail, acc)
     }
 
     val range: Set[Int] = (0 until n * n).toSet
