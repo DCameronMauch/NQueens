@@ -17,13 +17,13 @@ object NQueens {
     def recurse(todo: List[State], acc: Set[Set[Int]]): Set[Set[Int]] = todo match {
       case Nil =>
         acc
-      case state :: tail if (state.queens.size == n) =>
-        recurse(tail, acc + state.queens)
-      case state :: tail if (state.avail.size < n - state.queens.size) =>
+      case State(queens, _) :: tail if (queens.size == n) =>
+        recurse(tail, acc + queens)
+      case State(queens, avail) :: tail if (avail.size < n - queens.size) =>
         recurse(tail, acc)
-      case state :: tail =>
-        val next: List[State] = state.avail.toList.map(a =>
-          State(state.queens + a, filter(a, state.avail - a))
+      case State(queens, avail) :: tail =>
+        val next: List[State] = avail.toList.map(a =>
+          State(queens + a, filter(a, avail - a))
         )
         recurse(next ++ tail, acc)
     }
