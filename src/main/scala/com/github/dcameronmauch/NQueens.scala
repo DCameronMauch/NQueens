@@ -7,9 +7,9 @@ object NQueens {
     case class State(queens: Set[Int], avail: Set[Int])
 
     def filter(p: Int, avail: Set[Int]): Set[Int] = avail.filterNot(a => {
-      val sameRow: Boolean = (p / n) == (a / n)
-      val sameCol: Boolean = (p % n) == (a % n)
-      val diagonal: Boolean = ((p / n) - (a / n)).abs == ((p % n) - (a % n)).abs
+      def sameRow: Boolean = (p / n) == (a / n)
+      def sameCol: Boolean = (p % n) == (a % n)
+      def diagonal: Boolean = ((p / n) - (a / n)).abs == ((p % n) - (a % n)).abs
       sameRow || sameCol || diagonal
     })
 
